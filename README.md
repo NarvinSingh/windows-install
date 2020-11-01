@@ -20,11 +20,15 @@ Drag an ESD file to the ESD Decrypter `decrypt.cmd` and follow the prompts to cr
 Create UEFI Bootable USB
 ------------------------
 
-Format the first partition of the USB disk as FAT32 and copy the contents of the ISO file to the root of that partition. The USB should then be bootable under UEFI with secure Boot turned on.
+It is necessary to boot under UEFI to install Windows on a GPT partitioned hard drive.
+
+1. Format the first partition of the USB disk as FAT32.
+2. *Optional*: mark that partition as active if you want to boot under BIOS. However, you won't be able to install Windows on a GPT partitioned disk if you boot under BIOS.
+3. Copy the contents of the ISO file to the root of that partition.
+
+The USB disk should now be bootable under UEFI with secure Boot turned on.
 
 Alternatively, you can create a general purpose Windows PE UEFI/BIOS bootable USB disk by installing the Windows ADK with Windows PE and running `MakeWinPEMedia`. See the instructions [here](https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/winpe-create-usb-bootable-drive).
-
-It is necessary to boot under UEFI to install Windows on a GPT partitioned hard drive.
 
 Install
 -------
