@@ -47,7 +47,6 @@ Activate
 --------
 
 1. Copy the files in `activate.wim` during installation by adding a `DataImage` section like this to your answer file:
-
 ```xml
 <DataImage wcm:action="add">
     <Order>1</Order>
@@ -61,10 +60,9 @@ Activate
     </InstallFrom>
 </DataImage>
 ```
-
 Alternatively, you can manually extract the activation files from `activate.wim` after installation is complete.
-2. Run the following commands as Administrator by adding `SynchronousCommand` sections like these to your answer file:
 
+2. Run the following commands as Administrator by adding `SynchronousCommand` sections like these to your answer file:
 ```xml
 <SynchronousCommand wcm:action="add">
     <Order>1</Order>
@@ -91,6 +89,5 @@ Alternatively, you can manually extract the activation files from `activate.wim`
     <CommandLine>powershell Set-MpPreference -DisableRealtimeMonitoring $false</CommandLine>
 </SynchronousCommand>
 ```
-
 Alternatively, you can manually run the preceding commands from an elevated prompt after installation is complete. If you do this, and you manually extraced the activation files to a custom location, be sure to use the correct paths in the commands that reference the activation files.
 
