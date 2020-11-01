@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+    <settings pass="windowsPE">
+        <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <SetupUILanguage>
+                <UILanguage>en-US</UILanguage>
+            </SetupUILanguage>
+            <InputLocale>en-US</InputLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+        </component>
+        <component name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UserData>
+                <ProductKey>
+                    <!-- Pro -->
+                    <!-- <Key>W269N-WFGWX-YVC9B-4J6C9-T83GX</Key> -->
+                    <!-- Enterprise -->
+                    <Key>NPPR9-FWDCX-D2C8J-H872K-2YT43</Key>
+                </ProductKey>
+                <AcceptEula>true</AcceptEula>
+            </UserData>
+            <DiskConfiguration>
+                <Disk wcm:action="add">
+                    <ModifyPartitions>
+                        <ModifyPartition wcm:action="add">
+                            <Format>NTFS</Format>
+                            <Label>Windows</Label>
+                            <Letter>C</Letter>
+                            <Order>1</Order>
+                            <PartitionID>3</PartitionID>
+                        </ModifyPartition>
+                    </ModifyPartitions>
+                    <DiskID>0</DiskID>
+                    <WillWipeDisk>false</WillWipeDisk>
+                </Disk>
+            </DiskConfiguration>
+            <ImageInstall>
+                <OSImage>
+                    <InstallFrom>
+                        <MetaData wcm:action="add">
+                            <Key>/IMAGE/INDEX</Key>
+                            <Value>1</Value>
+                        </MetaData>
+                    </InstallFrom>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>3</PartitionID>
+                    </InstallTo>
+                </OSImage>
+                <DataImage wcm:action="add">
+                    <Order>1</Order>
+                    <InstallTo>
+                        <DiskID>0</DiskID>
+                        <PartitionID>3</PartitionID>
+                    </InstallTo>
+                    <InstallFrom>
+                        <Path>..\..\activate.wim</Path>
+                    </InstallFrom>
+                </DataImage>
+            </ImageInstall>
+        </component>
+    </settings>
+    <settings pass="specialize">
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <ComputerName>Moxie</ComputerName>
+        </component>
+        <!-- This isn't working for some reason, so disable these by using the registry in FirstLogonCommands
+        <component name="Microsoft-Windows-SystemRestore-Main" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableSR>1</DisableSR>
+        </component>
+        <component name="Microsoft-Windows-ErrorReportingCore" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <DisableWER>1</DisableWER>
+        </component>
+        -->
+    </settings>
+    <settings pass="oobeSystem">
+        <component name="Microsoft-Windows-International-Core" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <UILanguage>en-US</UILanguage>
+            <UserLocale>en-US</UserLocale>
+            <SystemLocale>en-US</SystemLocale>
+            <InputLocale>0409:00000409</InputLocale>
+        </component>
+        <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <FirstLogonCommands>
+                <!-- Disable -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>1</Order>
+                    <CommandLine>cmd /c echo 1 &gt;&gt; C:\install.log &amp;&amp; sc config DiagTrack start=disabled &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>2</Order>
+                    <CommandLine>cmd /c echo 2 &gt;&gt; C:\install.log &amp;&amp; sc stop DiagTrack &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>3</Order>
+                    <CommandLine>cmd /c echo 3 &gt;&gt; C:\install.log &amp;&amp; sc config dmwappushservice start=disabled &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>4</Order>
+                    <CommandLine>cmd /c echo 4 &gt;&gt; C:\install.log &amp;&amp; sc stop dmwappushservice &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>5</Order>
+                    <CommandLine>cmd /c echo 5 &gt;&gt; C:\install.log &amp;&amp; reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection /v AllowTelemetry /t reg_dword /d 0 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>6</Order>
+                    <CommandLine>cmd /c echo 6 &gt;&gt; C:\install.log &amp;&amp; reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v AllowCortana /t reg_dword /d 0 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>7</Order>
+                    <CommandLine>cmd /c echo 7 &gt;&gt; C:\install.log &amp;&amp; reg add HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager /v "SubscribedContent-338388Enabled" /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>8</Order>
+                    <CommandLine>cmd /c echo 8 &gt;&gt; C:\install.log &amp;&amp; reg add HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU /v NoAutoUpdate /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>9</Order>
+                    <CommandLine>cmd /c echo 9 &gt;&gt; C:\install.log &amp;&amp; reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore" /v DisableSR /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>10</Order>
+                    <CommandLine>cmd /c echo 10 &gt;&gt; C:\install.log &amp;&amp; reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" /v Disabled /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+
+                <!-- Enable -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>11</Order>
+                    <CommandLine>cmd /c echo 11 &gt;&gt; C:\install.log &amp;&amp; dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>12</Order>
+                    <CommandLine>cmd /c echo 12 &gt;&gt; C:\install.log &amp;&amp; dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+
+                <!-- Explorer -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>13</Order>
+                    <CommandLine>cmd /c echo 13 &gt;&gt; C:\install.log &amp;&amp; reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v LaunchTo /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>14</Order>
+                    <CommandLine>cmd /c echo 14 &gt;&gt; C:\install.log &amp;&amp; reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v PersistBrowsers /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>15</Order>
+                    <CommandLine>cmd /c echo 15 &gt;&gt; C:\install.log &amp;&amp; reg add HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced /v SeparateProcess /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+
+                <!-- Networking -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>16</Order>
+                    <CommandLine>cmd /c echo 16 &gt;&gt; C:\install.log &amp;&amp; reg add HKLM\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters /v AllowInsecureGuestAuth /t reg_dword /d 1 /f &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+
+                <!-- Delete -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>17</Order>
+                    <CommandLine>cmd /c echo 17 &gt;&gt; C:\install.log &amp;&amp; del /f /s /q "%PUBLIC%\Desktop\*" &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+
+                <!-- Activate -->
+                <SynchronousCommand wcm:action="add">
+                    <Order>18</Order>
+                    <CommandLine>cmd /c echo 18 &gt;&gt; C:\install.log &amp;&amp; powershell Set-MpPreference -DisableRealtimeMonitoring $true &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>19</Order>
+                    <CommandLine>cmd /c echo 19 &gt;&gt; C:\install.log &amp;&amp; C:\Activate\AutoRenewal-Setup.cmd /u &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>20</Order>
+                    <CommandLine>cmd /c echo 20 &gt;&gt; C:\install.log &amp;&amp; C:\Activate\Activate.cmd /u /w &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>21</Order>
+                    <CommandLine>cmd /c echo 21 &gt;&gt; C:\install.log &amp;&amp; powershell Add-MpPreference -ExclusionPath C:\Windows\System32\SppExtComObjHook.dll &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>22</Order>
+                    <CommandLine>cmd /c echo 22 &gt;&gt; C:\install.log &amp;&amp; rmdir /s /q C:\Activate &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+                <SynchronousCommand wcm:action="add">
+                    <Order>23</Order>
+                    <CommandLine>cmd /c echo 23 &gt;&gt; C:\install.log &amp;&amp; powershell Set-MpPreference -DisableRealtimeMonitoring $false &gt;&gt; C:\install.log</CommandLine>
+                </SynchronousCommand>
+            </FirstLogonCommands>
+            <OOBE>
+                <ProtectYourPC>3</ProtectYourPC>
+            </OOBE>
+            <TimeZone>Eastern Standard Time</TimeZone>
+            <UserAccounts>
+                <LocalAccounts>
+                    <LocalAccount wcm:action="add">
+                        <Group>Administrators</Group>
+                        <Name>Narvin</Name>
+                    </LocalAccount>
+                </LocalAccounts>
+            </UserAccounts>
+        </component>
+    </settings>
+</unattend>
