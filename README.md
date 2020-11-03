@@ -65,7 +65,7 @@ Activate
 1. Copy the files in `activate.wim` during installation by adding a `DataImage`
 section like this to your answer file:
 
-    ```xml
+    ```XML
     <DataImage wcm:action="add">
         <Order>1</Order>
         <InstallTo>
@@ -85,7 +85,7 @@ section like this to your answer file:
 2. Run the following commands as Administrator by adding `SynchronousCommand`
 sections like these to your answer file:
 
-    ```xml
+    ```XML
     <SynchronousCommand wcm:action="add">
         <Order>1</Order>
         <CommandLine>powershell Set-MpPreference -DisableRealtimeMonitoring $true</CommandLine>
